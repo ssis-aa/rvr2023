@@ -15,7 +15,7 @@ Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the 
 | A     | GP15 | User button A  --  left button (select)        |
 | B     | GP17 | User button B  --  right button  (confirm)     |
 | SDA   | GP0  | i2c data line for OLED and external sensors    |
-| SCL   | GP0  | i2c clock for OLED and external sensors        |
+| SCL   | GP1  | i2c clock for OLED and external sensors        |
 
 # rp2040 and i2c sensors
 
