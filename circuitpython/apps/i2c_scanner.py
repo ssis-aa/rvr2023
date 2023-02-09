@@ -18,7 +18,7 @@ import busio
 # To create I2C bus on specific pins
 # import busio
 # i2c = busio.I2C(board.SCL1, board.SDA1)  # QT Py RP2040 STEMMA connector
-# i2c = busio.I2C(board.GP17, board.GP16)  # Pi Pico RP2040
+i2c = busio.I2C(board.GP1, board.GP0)      # Pi Pico RP2040
 
 print("i2c detection range 0x00-0x7F")
 print("      0 1 2 3 4 5 6 7 8 9 A B C D E F")
