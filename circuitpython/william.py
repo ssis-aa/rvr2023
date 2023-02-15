@@ -16,5 +16,7 @@ display = adafruit_displayio_sh1106.SH1106(display_bus, width=128, height=64, co
 while True:
     if buttonA.value:
         print("A")
+        time.sleep(0.5)
     if buttonB.value:
         print("B")
+        time.sleep(0.5)
