@@ -15,11 +15,11 @@ import displayio
 import digitalio
 import adafruit_displayio_sh1106
 
-buttona = digitalio.DigitalInOut(board.GP17)
-buttona.switch_to_input(pull=digitalio.Pull.DOWN)
+buttona = digitalio.DigitalInOut(board.GP15)
 
-buttonb = digitalio.DigitalInOut(board.GP15)
-buttonb.switch_to_input(pull=digitalio.Pull.DOWN)
+
+buttonb = digitalio.DigitalInOut(board.GP17)
+
 
 displayio.release_displays()
 
