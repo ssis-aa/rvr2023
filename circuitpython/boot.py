@@ -1,4 +1,5 @@
 # just start with the oled 2023-02-15 in boot.py
+# https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/boot.py
 
 import time, board, busio, displayio
 import adafruit_displayio_sh1106
