@@ -1,5 +1,3 @@
-# just start with the oled 2023-02-09
-
 import time, board, busio, displayio, digitalio
 import adafruit_displayio_sh1106
 
