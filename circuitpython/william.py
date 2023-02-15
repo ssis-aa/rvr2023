@@ -3,11 +3,11 @@ import adafruit_displayio_sh1106
 
 displayio.release_displays()
 
-ButtonA = digitalio.DigitalInOut(board.GP17)
-ButtonA.switch_to_input(pull=digitalio.Pull.DOWN)
-
-ButtonB = digitalio.DigitalInOut(board.GP15)
+ButtonB = digitalio.DigitalInOut(board.GP17)
 ButtonB.switch_to_input(pull=digitalio.Pull.DOWN)
+
+ButtonA = digitalio.DigitalInOut(board.GP15)
+ButtonA.switch_to_input(pull=digitalio.Pull.DOWN)
 
 i2c = busio.I2C(board.GP1, board.GP0) # SCL SDA
 display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
