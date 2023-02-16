@@ -23,6 +23,7 @@ programs = os.listdir('apps')              # folder for programs
 programs.sort()
 number_programs = len(programs)            # number of installed programs
 
+
 displayio.release_displays()
 i2c = busio.I2C(board.GP1, board.GP0) # SCL SDA
 display_bus = displayio.I2CDisplay(i2c, device_address=0x3C)
@@ -32,7 +33,10 @@ menu = []                                  # first menu item:
 menu.append("Menu/Settings [{}]".format(number_programs))
 menu.append("REPL")                        # second menu item
 
-for x in programs:
+for i,x in enumerate(programs):
+    if x[:2] == "._":
+        programs[i] = programs[i][2:]
+        x = x[2:]
     menu.append(x[:-3])                    # remove the .py from program files
 
 mainmenu = displayio.Group()
@@ -80,6 +84,7 @@ while True:
       # displayio.release_displays() # return to REPL output - tbd
       pin_select.deinit()
       exec(open(program).read())
+      break
     select += 1
     if (select > number_programs + 1):
       select = 0
