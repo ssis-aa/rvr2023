@@ -1,5 +1,5 @@
 # Menu start screen.py
-#
+# https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/apps/menu.py
 # 2023/02/16
 # Button A: GP15 (left  - select)
 # Button B: GP17 (right - confirm)
@@ -88,5 +88,3 @@ while True:
       menu_fill(select - DISPLAY_ROWS + 1)
     else:
       menu_select(select)
-
-#exec(open("apps/bouncy_balls1.py").read())
