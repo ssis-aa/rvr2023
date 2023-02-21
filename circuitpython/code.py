@@ -1,26 +1,26 @@
 # Menu start screen.py
 # https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/apps/menu.py
-# 2023/02/17
+# 2023/02/21
 # Button A: GP15 (left  - select)
 # Button B: GP17 (right - confirm)
 
 import time, os, sys
 import board, displayio, terminalio, digitalio, busio
 import adafruit_displayio_sh1106
-from adafruit_debouncer import Debouncer
+from adafruit_debouncer    import Debouncer
 from adafruit_display_text import label
 
 DISPLAY_ROWS = 6
-color_menu = 0xFFFFFF
-color_select = 0x000000  # 0x00FF55
-long_press = 0.5  # time in seconds for long press to start program
+color_menu   = 0xFFFFFF
+color_select = 0x000000   # 0x00FF55
+long_press   = 0.5        # time in seconds for long press to start program
 
-pin_select = digitalio.DigitalInOut(board.GP15)
-pin_select.direction = digitalio.Direction.INPUT
-switchA = Debouncer(pin_select, interval=0.05)
-pin_confirm = digitalio.DigitalInOut(board.GP17)
+pin_select            = digitalio.DigitalInOut(board.GP15)
+pin_select.direction  = digitalio.Direction.INPUT
+switchA               = Debouncer(pin_select, interval=0.05)
+pin_confirm           = digitalio.DigitalInOut(board.GP17)
 pin_confirm.direction = digitalio.Direction.INPUT
-switchB = Debouncer(pin_confirm, interval=0.05)
+switchB               = Debouncer(pin_confirm, interval=0.05)
 
 programs = os.listdir("menu")  # folder for programs
 programs.sort()
@@ -86,12 +86,13 @@ while True:
         pressed = time.monotonic()
     if switchA.fell:  # button released
         time_pressed = time.monotonic() - pressed
-        if time_pressed > long_press:
+        if time_pressed > long_press:  # alternative to press button B
             if select < 2:
                 sys.exit()
             program = "menu/" + programs[select - 2]
             # displayio.release_displays() # return to REPL output - tbd
             pin_select.deinit()
+            pin_confirm.deinit()
             exec(open(program).read())
             break
         select += 1
@@ -106,7 +107,9 @@ while True:
         if select < 2:
             sys.exit()
         program = "menu/" + programs[select - 2]
-        # displayio.release_displays() # return to REPL output - tbd
+        print("Selected: ", program)
+        display.show(None)
         pin_select.deinit()
+        pin_confirm.deinit()
         exec(open(program).read())
         break
