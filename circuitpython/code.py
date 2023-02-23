@@ -1,4 +1,4 @@
-# Start menu for microcontroller with OLED display v0.4
+# Start menu for microcontroller with OLED display v0.5
 # https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/code.py
 # 2023/02/23
 # Button A: GP15 (left  - select)
@@ -10,7 +10,7 @@ import adafruit_displayio_sh1106
 from adafruit_debouncer    import Debouncer
 from adafruit_display_text import label
 
-DISPLAY_ROWS = 6
+DISPLAY_ROWS = 5
 color_menu   = 0xFFFFFF
 color_select = 0x000000   # 0x00FF55
 long_press   = 0.5        # time in seconds for long press to start program
@@ -22,8 +22,13 @@ pin_confirm           = digitalio.DigitalInOut(board.GP17)
 pin_confirm.direction = digitalio.Direction.INPUT
 switchB               = Debouncer(pin_confirm, interval=0.05)
 
-programs = os.listdir("menu")  # folder for programs
-programs.sort()
+directory = os.listdir("menu")  # folder for programs
+directory.sort()
+programs = []
+# create program list but skipping deleted programs
+for i, x in enumerate(directory):
+    if x[:2] != "._":
+        programs.append(directory[i])
 number_programs = len(programs)  # number of installed programs
 
 displayio.release_displays()
@@ -33,51 +38,60 @@ display = adafruit_displayio_sh1106.SH1106(
     display_bus, width=128, height=64, colstart=2
 )
 
-menu = []  # first menu item:
-menu.append("Menu/Settings [{}]".format(number_programs))
+menu = []  # all menu options - can be more than fit on the display
+# first menu item:
+menu.append(" Menu/Settings [{}] ".format(number_programs))
 
 for i, x in enumerate(programs):
-    if x[:2] == "._":
-        programs[i] = programs[i][2:]
-        x = x[2:]
-    menu.append(x[:-3])  # remove the .py from program files
+    menu.append(" " + x[:-3] + " ")  # remove the .py from program files
 
-mainmenu = displayio.Group()
-select   = 0                  # item select on the list shown
+displaymenu = displayio.Group()  # menu options actually shown on display
+select   = 0                     # item select on the list shown
 
 
 def menu_create():
     for item in range(DISPLAY_ROWS):
-        listitem = label.Label(terminalio.FONT, text="tbd")
+        listitem = label.Label(terminalio.FONT, text="")
         listitem.x = 0
-        listitem.y = 4 + 11 * item
-        mainmenu.append(listitem)
+        listitem.y = 5 + 13 * item
+        displaymenu.append(listitem)
 
 
 def menu_fill(s):
-    for item in range(DISPLAY_ROWS - 1, -1, -1):
-        mainmenu[item].text = menu[item + s]
+    if len(menu) < DISPLAY_ROWS:
+        for item in range(len(menu)):
+            displaymenu[item].text = menu[item]
+    else:
+        for item in range(DISPLAY_ROWS):
+            displaymenu[item].text = menu[item + s]
+        # this code fills from the bottom - its slightly faster
+        #for item in range(DISPLAY_ROWS - 1, -1, -1):
+        #    displaymenu[item].text = menu[item + s]
 
 
 def menu_select(x):
-    mainmenu[x].color = color_select
-    mainmenu[x].background_color = 0xFFFFFF
+    # highlight selected item
+    displaymenu[x].color = color_select
+    displaymenu[x].background_color = color_menu
+    # de-select old item
     if x == 0:
-        x = DISPLAY_ROWS - 1
-    else:
-        x -= 1
-    mainmenu[x].color = 0xFFFFFF
-    mainmenu[x].background_color = 0x000000
+        if len(menu) > DISPLAY_ROWS:
+            x = DISPLAY_ROWS
+        else:
+            x = len(menu)
+    x -= 1
+    displaymenu[x].color = color_menu
+    displaymenu[x].background_color = color_select
 
 
 # setup
 menu_create()
 menu_fill(0)
 menu_select(0)
-display.show(mainmenu)
+display.show(displaymenu)
 pressed = time.monotonic()
 
-
+# input loop
 while True:
     switchA.update()
     switchB.update()
@@ -95,7 +109,7 @@ while True:
             exec(open(program).read())
             break
         select += 1
-        if select > number_programs + 1:
+        if select > len(menu) - 1:
             select = 0
             menu_fill(0)
         if select > DISPLAY_ROWS - 1:
@@ -103,9 +117,9 @@ while True:
         else:
             menu_select(select)
     if switchB.fell:
-        if select < 2:
+        if select < 1:
             sys.exit()
-        program = "menu/" + programs[select - 2]
+        program = "menu/" + programs[select - 1]
         print("Selected: ", program)
         display.show(None)
         pin_select.deinit()
