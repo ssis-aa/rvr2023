@@ -1,6 +1,6 @@
-# Menu start screen.py
-# https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/apps/menu.py
-# 2023/02/21
+# Start menu for microcontroller with OLED display v0.4
+# https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/code.py
+# 2023/02/23
 # Button A: GP15 (left  - select)
 # Button B: GP17 (right - confirm)
 
@@ -35,7 +35,6 @@ display = adafruit_displayio_sh1106.SH1106(
 
 menu = []  # first menu item:
 menu.append("Menu/Settings [{}]".format(number_programs))
-menu.append("REPL")  # second menu item
 
 for i, x in enumerate(programs):
     if x[:2] == "._":
@@ -44,14 +43,14 @@ for i, x in enumerate(programs):
     menu.append(x[:-3])  # remove the .py from program files
 
 mainmenu = displayio.Group()
-select = 0
+select   = 0                  # item select on the list shown
 
 
 def menu_create():
     for item in range(DISPLAY_ROWS):
         listitem = label.Label(terminalio.FONT, text="tbd")
         listitem.x = 0
-        listitem.y = 5 + 11 * item
+        listitem.y = 4 + 11 * item
         mainmenu.append(listitem)
 
 
