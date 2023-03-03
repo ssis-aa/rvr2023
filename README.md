@@ -2,7 +2,6 @@
 
 Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the rvr API.
 
-
 ## 128x64 sh1106 1.3 inch oled
 
 ![sh1106](docs/sh1106.jpg)
@@ -56,4 +55,8 @@ Hopefully we soon have a little shelf with all these different sensors for 'plug
 | RIGHT | GP20 | Joystick-right                                            |
 | CTRL  | GP3  | Joystick-center                                           |
 | SDA   | GP0  | i2c data line for OLED and external sensors               |
-| SCL   | GP0  | i2c clock for OLED and external sensors                   |
+| SCL   | GP1  | i2c clock for OLED and external sensors                   |
+| TX    | GP4  | TX UART 1                                                 |
+| RX    | GP5  | RX UART 1                                                 |
+| TRIG  | GP6  | trigger pin for ultrasonic                                |
+| ECHO  | GP7  | echo pin for ultrasonic                                   |
