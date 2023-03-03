@@ -1,4 +1,5 @@
 # rvr2023
+
 Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the rvr API.
 
 
@@ -16,8 +17,10 @@ Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the 
 | B     | GP17 | User button B  --  right button  (confirm)     |
 | SDA   | GP0  | i2c data line for OLED and external sensors    |
 | SCL   | GP1  | i2c clock for OLED and external sensors        |
-| TRIG  | GP4  | trigger pin for ultrasonic                     |
-| ECHO  | GP5  | echo pin for ultrasonic                        |
+| TX    | GP4  | TX UART 1                                      |
+| RX    | GP5  | RX UART 1                                      |
+| TRIG  | GP6  | trigger pin for ultrasonic                     |
+| ECHO  | GP7  | echo pin for ultrasonic                        |
 
 # rp2040 and i2c sensors
 
