@@ -2,6 +2,10 @@
 
 Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the rvr API.
 
+## Controller board with input and menu to select program
+
+![Board on the back of an Sphero RVR](docs/board_20230304.jpeg)
+
 ## 128x64 sh1106 1.3 inch oled
 
 ![sh1106](docs/sh1106.jpg)
