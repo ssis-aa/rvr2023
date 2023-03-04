@@ -1,0 +1,2 @@
+Adafruit CircuitPython 7.1.1-dirty on 2022-02-11; Blackpill 16MB SSIS edition with STM32F411CE
+Board ID:stm32f411ce_blackpill_with_flash
