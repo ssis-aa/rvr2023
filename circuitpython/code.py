@@ -1,4 +1,4 @@
-# Start menu for microcontroller with OLED display v0.6
+# Start menu for microcontroller with OLED display v0.7
 # https://github.com/ssis-aa/rvr2023/blob/main/circuitpython/code.py
 # 2023/02/23
 # Button A: GP15 (left  - select)
@@ -89,25 +89,12 @@ menu_create()
 menu_fill(0)
 menu_select(0)
 display.show(displaymenu)
-pressed = time.monotonic()
 
 # input loop
 while True:
     switchA.update()
     switchB.update()
     if switchA.rose:  # button pressed
-        pressed = time.monotonic()
-    if switchA.fell:  # button released
-        time_pressed = time.monotonic() - pressed
-        if time_pressed > long_press:  # alternative to press button B
-            if select < 1:
-                sys.exit()
-            program = "menu/" + programs[select - 1]
-            display.show(None)
-            pin_select.deinit()
-            pin_confirm.deinit()
-            exec(open(program).read())
-            break
         select += 1
         if select > len(menu) - 1:
             select = 0
@@ -116,7 +103,7 @@ while True:
             menu_fill(select - DISPLAY_ROWS + 1)
         else:
             menu_select(select)
-    if switchB.fell:
+    if switchB.rose:
         if select < 1:
             sys.exit()
         program = "menu/" + programs[select - 1]
