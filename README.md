@@ -1,4 +1,6 @@
 # rvr2023
+[![GitHub release](https://img.shields.io/github/release/ssis-aa/rvr2023.svg)](https://GitHub.com/ssis-aa/rvr2023/releases/)
+[![MIT license](https://img.shields.io/github/license/ssis-aa/rvr2023)](https://ssis-aa.mit-license.org/)
 
 Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the rvr API.
 
