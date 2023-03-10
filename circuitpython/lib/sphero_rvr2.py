@@ -162,8 +162,18 @@ class RVRDrive:
     # RVRDrive.set_leds(byte1, byte2, byte3, byte4, red, green, blue)
     # inputs: binary array of the 16 leds in the sphero RVR
     # sets the red, green, and blue brightness, each as a number from 0-255.
-    # 
-    def set_all_leds(self, red, green, blue):
+
+    def set_leds(self, byte1, byte2, byte3, byte4, red, green, blue):
+        # as described in https://sdk.sphero.com/docs/api_spec/general_api#packet-encoding 
+        SOP = 0x8D  # start of package - always 8D
+        FGS = 0x3E  # flags            - request response (only error) but no target nor source
+        TID = 0x11  # target ID        - 
+        SID = 0x01  # source ID        -
+        DID = 0x1A  # device ID
+        CID = 0x1A  # command ID
+        SEQ = 0x01  # sequence
+        EOP = 0xD8  # end of package   - always D8
+        output_packet = [SOP, FGS, DID, CID, SEQ]
         led_data = [
             0x8D, 0x3E, 0x11, 0x01, 0x1A, 0x1A, 0x00,
             0x3F, 0xFF, 0xFF, 0xFF
@@ -186,7 +196,6 @@ class RVRDrive:
     # inputs: none
     # sets the red, green, and blue brightness, each as a number from 0-255.
 
-    # 
     def set_all_leds(self, red, green, blue):
         led_data = [
             0x8D, 0x3E, 0x11, 0x01, 0x1A, 0x1A, 0x00,
