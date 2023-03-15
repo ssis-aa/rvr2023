@@ -13,14 +13,14 @@ from sphero_rvr2 import RVRDrive
 
 sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.GP6, echo_pin=board.GP7)    # rp2040
 rvr = RVRDrive(uart = busio.UART(board.GP4, board.GP5, baudrate=115200))     # rp2040
-rgb = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.3, auto_write=False)
-rgb[0] = BLUE
-rgb.show()
+#rgb = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.3, auto_write=False)
+#rgb[0] = BLUE
+#rgb.show()
 
 def leds(color):
     rvr.set_all_leds(color[0], color[1], color[2])
-    rgb[0] = color
-    rgb.show()
+    #rgb[0] = color
+    #rgb.show()
 
 time.sleep(0.5)
 print("Start ultrasonic distance drive")
