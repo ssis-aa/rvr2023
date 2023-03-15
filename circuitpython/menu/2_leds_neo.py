@@ -4,7 +4,8 @@
 # v0.3 2023-03-06 short ultrasonic test
 # v0.4 2023-03-14 included neopixel led on YD-RP2040 board
 
-import board, busio, time, neopixel
+#import board, busio, time, neopixel
+import board, busio, time
 import adafruit_hcsr04             # ultrasonic for distance to be used later
 from sphero_rvr import RVRDrive
 
@@ -15,15 +16,15 @@ BLUE  = (  0,   0, 255)
 sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.GP6, echo_pin=board.GP7)    # rp2040
 rvr = RVRDrive(uart = busio.UART(board.GP4, board.GP5, baudrate=115200))     # rp2040
 
-rgb = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.3, auto_write=False)
-rgb[0] = BLUE
-rgb.show()
+#rgb = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.3, auto_write=False)
+#rgb[0] = BLUE
+#rgb.show()
 time.sleep(0.5)
 
 def leds(color):
     rvr.set_all_leds(color[0], color[1], color[2])
-    rgb[0] = color
-    rgb.show()
+    #rgb[0] = color
+    #rgb.show()
 
 print("LEDs on")
 
