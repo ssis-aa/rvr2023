@@ -27,6 +27,15 @@ print("Start square drive")
 leds(BLUE) #set leds to blue
 time.sleep(2)
 
+colors = [RED, GREEN, BLUE]
+pattern = [[0.0, 0.3], [0.3, 0.3], [0.3, 0.0], [0.0, 0.0],
+           [0.4, 0.4], [0.6, 0.4], [0.6, 1.2]]
+for i, point in enumerate(pattern):
+    leds(colors[i%3])
+    print(f"Drive to {pattern[i][0]}, {pattern[i][1]}")
+    rvr.drive_to_position_si(0,pattern[i][0], pattern[i][1], 100)
+    time.sleep(5)
+
 rvr.drive_to_position_si(0, 0,   0.6, 100)
 time.sleep(5)
 rvr.drive_to_position_si(0, 0.6, 0.6, 100)
