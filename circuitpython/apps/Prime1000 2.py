@@ -1,8 +1,8 @@
 import math, time
-last = 10000
+last = 1000
 found = 4          # we start from 11, know 2, 3, 5, 7
-print(f"Prime numbers to {last}")
-#print('2, 3, 5, 7',end='')
+print(f"Primes to {last}")
+print('2, 3, 5, 7',end='')
 start = time.monotonic()
 for number in range(11, last, 2):
     prime = True
@@ -11,9 +11,11 @@ for number in range(11, last, 2):
             prime = False
             break
     if prime:
-        #print(",", number, end='')
+        print(",", number, end='')
         found += 1
         prime = 1
 end = time.monotonic()
-print(f"This took: {(end - start)} seconds.")
-print(f"I found {found} prime numbers.")
+print(f"\nIt took: {(end - start)} s.")
+print(f"Found {found} numbers.")
+
+time.sleep(5)
