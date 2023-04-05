@@ -1,0 +1,53 @@
+# drive for the RVR Challenge 2023
+# if your rp2040 has no NEOPIXEL write False below
+HAVE_NEOPIXEL = True
+
+DISTANCE = 25
+TIMEOUT  = 7
+BLACK = (  0,   0,   0)
+RED   = (255,   0,   0)
+GREEN = (  0, 255,   0)
+BLUE  = (  0,   0, 255)
+WHITE = (255, 255, 255)
+colors = [RED, GREEN, BLUE]
+
+import board, busio, time
+import adafruit_hcsr04              # ultrasonic for distance to be used later
+from   sphero_rvr import RVRDrive
+
+sonar = adafruit_hcsr04.HCSR04(trigger_pin=board.GP6, echo_pin=board.GP7)    # rp2040
+rvr = RVRDrive(uart = busio.UART(board.GP4, board.GP5, baudrate=115200))     # rp2040
+if HAVE_NEOPIXEL:
+    rgb = neopixel.NeoPixel(board.NEOPIXEL, 1, brightness=0.3, auto_write=False)
+def leds(color):
+    rvr.set_all_leds(color[0], color[1], color[2])
+    if HAVE_NEOPIXEL:
+        rgb[0] = color
+        rgb.show()
+
+leds(RED)
+time.sleep(0.5)
+print("Competition 2023")
+leds(BLUE) #set leds to blue
+time.sleep(2)
+
+rvr.reset_yaw()
+
+pattern = [[270, 0.0, 1.8, 6.1], [270, 0.3, 1.8, 2.5], [180, 0.3, 1.6, 2.5],
+           [ 90, 0.1, 1.6, 2.5], ]
+
+for i, point in enumerate(pattern):
+    leds(colors[i%3])
+    print(f"Drive to {pattern[i][0]}, {pattern[i][1]}")
+    rvr.drive_to_position_si(pattern[i][0],pattern[i][1], pattern[i][2], 100)
+    time.sleep(pattern[i][3])
+
+leds(BLACK)
+time.sleep(2)
+for i in range(21):
+    leds(colors[i%3])
+    time.sleep(0.1)
+print("Pattern finished")
+leds(BLACK)
+rvr.stop()
+time.sleep(20)
