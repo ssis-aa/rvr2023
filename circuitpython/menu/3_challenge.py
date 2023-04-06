@@ -35,8 +35,8 @@ rvr.reset_yaw()
 
 # The pattern array has 4 values: direction, x-coordinate, y-coordinate, seconds to execute
 # As directions: 0 is forward, 270 is right, 180 is backward and 90 is left. coordinates in meters.
-pattern = [[270, 0.0, 1.8, 6.1], [270, 0.3, 1.8, 2.5], [180, 0.3, 1.6, 2.5],
-           [ 90, 0.1, 1.6, 2.5], ]
+pattern = [[270, 0.0, 2.1, 6.5], [180, 1.1, 2.1, 3.5], [ 90, 1.0, 2.1, 2.8],
+           [  0, 1.0, 2.0, 2.5], ]
 
 for i, point in enumerate(pattern):
     leds(colors[i%3])
