@@ -6,6 +6,17 @@ Controlling the Sphero RVR with a rp2040 over serial in CircuitPython using the 
 
 ![controller board on rvr](docs/rvr2023.jpg)
 
+## API description
+
+``` py
+from sphero_rvr import RVRDrive
+rvr = RVRDrive(uart = busio.UART(board.GP4, board.GP5, baudrate=115200))     # rp2040
+
+rvr.setMotors(150,150)
+rvr.drive_to_position_si(yaw_angle, x, y, speed)
+rvr.stop()
+```
+
 ## Controller board with input and menu to select program
 
 ![Board on the back of an Sphero RVR](docs/board_20230304.jpeg)
